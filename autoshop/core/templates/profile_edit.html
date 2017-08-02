@@ -1,0 +1,25 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Autoshop | Profile</title>
+</head>
+<div class="jumbotron" style="box-shadow: 2px 2px 4px #000000;">
+    <h2 class="text-center"> Auto-Shop</h2>
+    <h3 class="text-center">A website with information about automobiles for buying/selling purposes.</h3>
+</div>
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        <tr><td><strong>Current Status</strong></td><td><strong>Changes to be made</strong></td></tr>
+        <tr><td>Username: {{ user_info_dict.username }}</td><br></tr>
+        <tr><td>Profile picture: {{ user_info_dict.photo }}</td> <td></td><br></tr>
+        <tr><td>Bio: {{ user_info_dict.bio }}</td> <td>{{ form.bio }}</td><br></tr>
+        <tr><td>Gender:  {{ user_info_dict.gender }}</td> <td>{{ form.gender }}</td><br></tr>
+        <tr><td>Date of birth: {{ user_info_dict.date_of_birth }}</td><td> {{ form.date_of_birth }}</td><br></tr>
+        <tr><td>Mobile number:  {{ user_info_dict.mobile_number }}</td> <td>{{ form.mobile_number }}</td><br></tr>
+        <tr><td>Address: {{ user_info_dict.address }}</td> <td> {{ form.address }}</td><br></tr>
+        <tr><td>City: {{ user_info_dict.city }}</td><td> {{ form.city }}</td><br></tr>
+        <tr><td>Country: {{ user_info_dict.country }}</td><td> {{ form.country }}<br></tr>
+    </table>
+
+    <button type="submit" value="Submit"> Save Changes</button>
+</form>
