@@ -1,4 +1,6 @@
+from core.models import Profile
 from django import forms
+from django.forms import ModelForm
 
 
 class SignupForm(forms.Form):
@@ -31,3 +33,15 @@ class SigninForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
 
+
+class EditProfileForm(ModelForm):
+    """
+    Edit Profile form.
+    """
+
+    class Meta:
+        model = Profile
+        exclude = ['user', 'photo']
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'class':'datepicker'}),
+        }

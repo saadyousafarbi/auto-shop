@@ -1,11 +1,15 @@
 from __future__ import unicode_literals
 
-from django.contrib.auth import authenticate, login
+from dateutil.parser import parse
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth import logout
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .forms import SignupForm, SigninForm
+from django.urls import reverse
+
+from core.forms import SignupForm, SigninForm, EditProfileForm
+from core.models import Profile
 
 
 def index(request):
@@ -35,7 +39,8 @@ def register(request):
                 new_user.set_password(form.data['password'])
                 new_user.save()
                 return redirect('/')
-        return redirect('failure.html')
+            
+        return render(request, 'failure.html')
     else:
         form = SignupForm()
         return render(request, 'register.html', {'form': form})
@@ -57,10 +62,10 @@ def log_in(request):
                 password=form.data['password'],
             )
             if not user:
-                return redirect('failure.html')
+                return render(request, 'failure.html')
 
             login(request, user)
-            return redirect('success.html')
+            return render(request, 'success.html')
     else:
         return render(request, 'login.html', {'form': form})
 
@@ -94,13 +99,56 @@ def profile(request):
     """
     This view directs current user to his/her profile page
     """
-    username = request.user
-    user_information = User.objects.get(username=username)
+    user_profile = request.user.profile
     user_info_dict = {
-        'username' : user_information.username,
-        'first_name': user_information.first_name,
-        'last_name': user_information.last_name,
-        'email' : user_information.email,
+        'username': user_profile.user,
+        'bio': user_profile.bio,
+        'gender': user_profile.gender,
+        'date_of_birth': user_profile.date_of_birth,
+        'mobile_number': user_profile.mobile_number,
+        'address': user_profile.address,
+        'city': user_profile.city,
+        'country': user_profile.country,
     }
     context = {'user_info_dict': user_info_dict}
     return render(request, 'profile.html',  context)
+
+
+@login_required()
+def edit_profile(request):
+    """
+    Show profile edit page and save user profile information on save.
+    """
+    form = EditProfileForm()
+    user_profile = request.user.profile
+    user_info_dict = {
+        'username': request.user,
+        'bio': user_profile.bio,
+        'gender': user_profile.gender,
+        'date_of_birth': user_profile.date_of_birth,
+        'mobile_number': user_profile.mobile_number,
+        'address': user_profile.address,
+        'city': user_profile.city,
+        'country': user_profile.country,
+        'photo': user_profile.photo,
+    }
+    context = {'user_info_dict': user_info_dict, 'form': form}
+    if request.method == 'POST':
+        post_data = request.POST.copy()
+        post_data['date_of_birth'] = parse(post_data['date_of_birth'])
+        form = EditProfileForm(post_data, instance=user_profile)
+        if form.is_valid():
+            Profile.objects.filter(user=request.user).update(
+                bio = form.data['bio'],
+                gender = form.data['gender'],
+                mobile_number = form.data['mobile_number'],
+                address = form.data['address'],
+                city = form.data['city'],
+                country = form.data['country'],
+            )
+            return redirect(reverse('core:profile'))
+
+        print 'Profile for user "%s" failed to save due to validation errors: %s' % (request.user.username, form.errors)
+        return render(request, 'failure.html')
+
+    return render(request, 'profile_edit.html', context)
