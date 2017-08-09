@@ -4,7 +4,6 @@ from dateutil.parser import parse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
@@ -139,16 +138,18 @@ def edit_profile(request):
         form = EditProfileForm(post_data, instance=user_profile)
         if form.is_valid():
             Profile.objects.filter(user=request.user).update(
-                bio = form.data['bio'],
-                gender = form.data['gender'],
-                mobile_number = form.data['mobile_number'],
-                address = form.data['address'],
-                city = form.data['city'],
-                country = form.data['country'],
+                bio=form.data['bio'],
+                gender=form.data['gender'],
+                mobile_number=form.data['mobile_number'],
+                address =form.data['address'],
+                city=form.data['city'],
+                country=form.data['country'],
             )
             return redirect(reverse('core:profile'))
 
-        print 'Profile for user "%s" failed to save due to validation errors: %s' % (request.user.username, form.errors)
+        print 'Profile for user "%s" failed to save due to validation errors: %s' % (
+            request.user.username, form.errors
+        )
         return render(request, 'failure.html')
 
     return render(request, 'profile_edit.html', context)
