@@ -30,7 +30,7 @@ class SigninForm(forms.Form):
         password (str): password of user
 
     """
-    username = forms.CharField(max_length=100)
+    username = forms.CharField(max_length=100, required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
 
 
@@ -38,7 +38,6 @@ class EditProfileForm(ModelForm):
     """
     Edit Profile form.
     """
-
     class Meta:
         model = Profile
         exclude = ['user', 'photo']
