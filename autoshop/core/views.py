@@ -22,11 +22,13 @@ def register(request):
     """
     This view redirects users to the signup page. If user is submitting
     form (POST), user registration takes place. If user is visiting
-    page, user is directed to page containing reqistration form.
+    page, user is directed to page containing registration form.
 
     """
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        post_data = request.POST.copy()
+        post_data['date_of_birth'] = parse(post_data['date_of_birth'])
+        form = SignupForm(post_data)
         if form.is_valid():
             new_user, created = User.objects.get_or_create(
                 username=form.data['username']
@@ -36,9 +38,20 @@ def register(request):
                 new_user.last_name = form.data['last_name']
                 new_user.email = form.data['email']
                 new_user.set_password(form.data['password'])
+                new_user.profile.bio = form.data['bio']
+                new_user.profile.gender = form.data['gender']
+                new_user.profile.photo = form.data['photo']
+                new_user.profile.date_of_birth = form.data['date_of_birth']
+                new_user.profile.mobile_number = form.data['mobile_number']
+                new_user.profile.address = form.data['address']
+                new_user.profile.city = form.data['city']
+                new_user.profile.country = form.data['country']
                 new_user.save()
                 return redirect('/')
-            
+
+        print 'Profile for user "%s" failed to save due to validation errors: %s' % (
+            request.user.username, form.errors
+        )
         return render(request, 'failure.html')
     else:
         form = SignupForm()
@@ -141,7 +154,7 @@ def edit_profile(request):
                 bio=form.data['bio'],
                 gender=form.data['gender'],
                 mobile_number=form.data['mobile_number'],
-                address =form.data['address'],
+                address=form.data['address'],
                 city=form.data['city'],
                 country=form.data['country'],
             )

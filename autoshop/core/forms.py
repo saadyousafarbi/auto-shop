@@ -14,11 +14,24 @@ class SignupForm(forms.Form):
         password (str): Password of user
 
     """
-    first_name = forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=30)
-    email = forms.EmailField(max_length=100)
-    username = forms.CharField(max_length=30)
-    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+
+    first_name = forms.CharField(help_text='Enter first name', max_length=30)
+    last_name = forms.CharField(help_text='Enter last name', max_length=30)
+    email = forms.EmailField(help_text='Enter email address', max_length=100)
+    username = forms.CharField(help_text='Enter username', max_length=30)
+    password = forms.CharField(help_text='Enter password', widget=forms.PasswordInput, required=True)
+    bio = forms.CharField(help_text='Enter some information about yourself', required=False)
+    gender = forms.ChoiceField(help_text='Specify gender', choices=GENDER_CHOICES)
+    photo = forms.ImageField(help_text='Upload profile photo', required=False)
+    date_of_birth = forms.DateField(help_text='Enter date of birth', required=False)
+    mobile_number = forms.CharField(help_text='Enter mobile number', required=False)
+    address = forms.CharField(help_text='Enter address', required=False)
+    city = forms.CharField(help_text='Enter city', required=False)
+    country = forms.CharField(help_text='Enter country', required=False)
 
 
 class SigninForm(forms.Form):
