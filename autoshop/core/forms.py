@@ -19,11 +19,6 @@ class SignupForm(ModelForm):
         ('M', 'Male'),
         ('F', 'Female'),
     )
-    first_name = forms.CharField(help_text='Enter first name', max_length=30)
-    last_name = forms.CharField(help_text='Enter last name', max_length=30)
-    email = forms.EmailField(help_text='Enter email address', max_length=100)
-    username = forms.CharField(help_text='Enter username', max_length=30)
-    password = forms.CharField(help_text='Enter password', max_length=30, widget=forms.PasswordInput())
     bio = forms.CharField(help_text='Enter some information about yourself', required=False)
     gender = forms.ChoiceField(help_text='Specify gender', choices=GENDER_CHOICES)
     photo = forms.ImageField(help_text='Upload profile photo', required=False)
@@ -36,6 +31,16 @@ class SignupForm(ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password']
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
+        help_texts = {
+            'first_name': 'Enter first name:',
+            'last_name': 'Enter last name:',
+            'username': 'Enter username:',
+            'email': 'Enter email:',
+            'password': 'Enter password:',
+        }
 
 
 class SigninForm(forms.Form):
