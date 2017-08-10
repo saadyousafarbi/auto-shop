@@ -6,19 +6,13 @@ from django.contrib.auth.models import User
 
 class SignupForm(ModelForm):
     """
-    Model signup form.
-
-    fields:
-        first_name (str): First name of user
-        last_name (str): Last name of user
-        email (str): Email of user
-        password (str): Password of user
-
+    Model user signup form.
     """
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
     )
+
     bio = forms.CharField(help_text='Enter some information about yourself', required=False)
     gender = forms.ChoiceField(help_text='Specify gender', choices=GENDER_CHOICES)
     photo = forms.ImageField(help_text='Upload profile photo', required=False)
@@ -31,15 +25,15 @@ class SignupForm(ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password']
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
         help_texts = {
             'first_name': 'Enter first name:',
             'last_name': 'Enter last name:',
             'username': 'Enter username:',
             'email': 'Enter email:',
             'password': 'Enter password:',
+        }
+        widgets = {
+            'password': forms.PasswordInput(),
         }
 
 
