@@ -1,9 +1,10 @@
 from core.models import Profile
 from django import forms
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 
-class SignupForm(forms.Form):
+class SignupForm(ModelForm):
     """
     Model signup form.
 
@@ -18,12 +19,11 @@ class SignupForm(forms.Form):
         ('M', 'Male'),
         ('F', 'Female'),
     )
-
     first_name = forms.CharField(help_text='Enter first name', max_length=30)
     last_name = forms.CharField(help_text='Enter last name', max_length=30)
     email = forms.EmailField(help_text='Enter email address', max_length=100)
     username = forms.CharField(help_text='Enter username', max_length=30)
-    password = forms.CharField(help_text='Enter password', widget=forms.PasswordInput, required=True)
+    password = forms.CharField(help_text='Enter password', max_length=30, widget=forms.PasswordInput())
     bio = forms.CharField(help_text='Enter some information about yourself', required=False)
     gender = forms.ChoiceField(help_text='Specify gender', choices=GENDER_CHOICES)
     photo = forms.ImageField(help_text='Upload profile photo', required=False)
@@ -32,6 +32,10 @@ class SignupForm(forms.Form):
     address = forms.CharField(help_text='Enter address', required=False)
     city = forms.CharField(help_text='Enter city', required=False)
     country = forms.CharField(help_text='Enter country', required=False)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email', 'password']
 
 
 class SigninForm(forms.Form):
