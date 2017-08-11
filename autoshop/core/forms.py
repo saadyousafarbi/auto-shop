@@ -26,11 +26,11 @@ class SignupForm(ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password']
         help_texts = {
-            'first_name': 'Enter first name:',
-            'last_name': 'Enter last name:',
-            'username': 'Enter username:',
-            'email': 'Enter email:',
-            'password': 'Enter password:',
+            'first_name': 'Enter first name',
+            'last_name': 'Enter last name',
+            'username': 'Enter username. This cannot be changed later.',
+            'email': 'Enter email',
+            'password': 'Enter password',
         }
         widgets = {
             'password': forms.PasswordInput(),

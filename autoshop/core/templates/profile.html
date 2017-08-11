@@ -1,11 +1,7 @@
-<head>
-    <meta charset="UTF-8">
-    <title>Autoshop | Profile</title>
-</head>
-<div class="jumbotron" style="box-shadow: 2px 2px 4px #000000;">
-    <h2 class="text-center"> Auto-Shop</h2>
-    <h3 class="text-center">A website with information about automobiles for buying/selling purposes.</h3>
-</div>
+{% extends "base.html" %}
+
+{% block content %}
+
 Username: {{ user_info_dict.username }} <br>
 Bio: {{ user_info_dict.bio }} <br>
 Gender:  {{ user_info_dict.gender }} <br>
@@ -16,3 +12,5 @@ City: {{ user_info_dict.city }} <br>
 Country: {{ user_info_dict.country }} <br>
 
 <a href="{% url 'core:edit_profile' %}">Edit profile</a>
+
+{% endblock content %}
