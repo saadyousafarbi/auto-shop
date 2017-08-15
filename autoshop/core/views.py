@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from dateutil.parser import parse
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -52,7 +53,8 @@ def register(request):
         print 'Profile for user "%s" failed to save due to validation errors: %s' % (
             request.user.username, form.errors
         )
-        return render(request, 'failure.html')
+        messages.error(request, 'Form is invalid. Please try again.' + form.errors)
+        return render(request, 'register.html')
     else:
         form = SignupForm()
         return render(request, 'register.html', {'form': form})
@@ -74,10 +76,12 @@ def log_in(request):
                 password=form.data['password'],
             )
             if not user:
-                return render(request, 'failure.html')
+                messages.error(request, 'Invalid credentials. Try again.')
+                return render(request, 'login.html', {'form': form})
 
             login(request, user)
-            return render(request, 'success.html')
+            messages.success(request, 'You logged in successfully.')
+            return render(request, 'dashboard.html')
     else:
         return render(request, 'login.html', {'form': form})
 
@@ -88,22 +92,6 @@ def log_out(request):
     """
     logout(request)
     return redirect('/')
-
-
-@login_required()
-def success(request):
-    """
-    This view directs user to success page in case of successful logistration.
-
-    """
-    return render(request, 'success.html')
-
-
-def failure(request):
-    """
-    This view directs user to failure page in case of wrong logistration.
-    """
-    return render(request, 'failure.html')
 
 
 @login_required()
@@ -163,6 +151,7 @@ def edit_profile(request):
         print 'Profile for user "%s" failed to save due to validation errors: %s' % (
             request.user.username, form.errors
         )
-        return render(request, 'failure.html')
+        messages.error(request, 'Form is invalid' + form.errors)
+        return render(request, 'profile_edit.html', context)
 
     return render(request, 'profile_edit.html', context)
