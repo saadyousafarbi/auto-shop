@@ -15,7 +15,7 @@ def index(request):
     """
     This view redirects users to the main page of autoshop website.
     """
-    return render(request, 'base.html')
+    return render(request, 'home.html')
 
 
 def register(request):

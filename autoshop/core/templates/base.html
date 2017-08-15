@@ -1,11 +1,26 @@
-<head>
-    <title>Auto-shop | Home</title>
-</head>
-<body>
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>My Project</title>
+
+        <link rel="stylesheet" href="{% static 'dist/bootstrap-4.0.0/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/core.css' %}">
+    </head>
+
+    <body>
         <div class="jumbotron" style="box-shadow: 2px 2px 4px #000000;">
             <h2 class="text-center"> Auto-Shop</h2>
             <h3 class="text-center">A website with information about automobiles for buying/selling purposes.</h3>
         </div>
-        <a href="login">login</a>
-        <a href="register">register</a>
-</body>
+    {% block content %}{% endblock content %}
+    </body>
+
+<script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'dist/bootstrap-4.0.0/js/bootstrap.min.js' %}"></script>
+
+</html>
