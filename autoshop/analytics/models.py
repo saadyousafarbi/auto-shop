@@ -12,11 +12,7 @@ class AnalyticsRequestsRecord(models.Model):
         request_status (bool) = success/error property of request
         request_type (str) = type of request
     """
-    REQUEST_CHOICES = (
-        ('G', 'GET'),
-        ('P', 'POST'),
-    )
 
     date = models.DateField()
-    request_status = models.BooleanField()
-    request_type = models.CharField(choices=REQUEST_CHOICES)
+    request_status = models.CharField(max_length=10)
+    request_type = models.CharField(max_length=10)

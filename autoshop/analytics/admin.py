@@ -1,6 +1,8 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib import admin
+from analytics.models import AnalyticsRequestsRecord
 
-# Register your models here.
+
+class AnalyticsAdmin(admin.ModelAdmin):
+    list_display = ['date']
+
+admin.site.register(AnalyticsRequestsRecord, AnalyticsAdmin)
