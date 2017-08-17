@@ -15,7 +15,7 @@ class AnalyticsRequestsRecord(models.Model):
          requests_counter_post_err (int) = failure counter for POST request
 
     """
-    date = models.DateField(verbose_name='Record Date', default=datetime.date.today)
+    date = models.DateField(verbose_name='Record Date', default=datetime.date.today, unique=True)
     requests_counter_get = models.PositiveIntegerField(verbose_name='GET Requests Counter', default=0)
     requests_counter_get_err = models.PositiveIntegerField(verbose_name='Failed GET Requests Counter', default=0)
     requests_counter_post = models.PositiveIntegerField(verbose_name='POST Requests Counter', default=0)

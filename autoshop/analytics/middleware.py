@@ -1,7 +1,7 @@
 import datetime
 
 from django.utils.deprecation import MiddlewareMixin
-from analytics.utils import record_for_request
+from analytics.utils import add_analytics_record
 
 
 class AnalyticsMiddleware(MiddlewareMixin):
@@ -11,5 +11,5 @@ class AnalyticsMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
 
-        record_for_request(datetime.date.today(), request.method, response.status_code)
+        add_analytics_record(request.method, response.status_code)
         return response
