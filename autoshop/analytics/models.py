@@ -20,5 +20,3 @@ class AnalyticsRequestsRecord(models.Model):
     requests_counter_get_err = models.PositiveIntegerField(verbose_name='Failed GET Requests Counter', default=0)
     requests_counter_post = models.PositiveIntegerField(verbose_name='POST Requests Counter', default=0)
     requests_counter_post_err = models.PositiveIntegerField(verbose_name='Failed POST Requests Counter', default=0)
-
-    objects = models.Manager()
