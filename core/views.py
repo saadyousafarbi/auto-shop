@@ -81,7 +81,7 @@ def log_in(request):
 
             login(request, user)
             messages.success(request, 'You logged in successfully.')
-            return render(request, 'dashboard.html')
+            return render(request, 'home.html')
     else:
         return render(request, 'login.html', {'form': form})
 

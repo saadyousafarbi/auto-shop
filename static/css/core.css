@@ -29,3 +29,17 @@ form button.submit {
     margin: 4px 2px;
     cursor: pointer;
 }
+
+/**
+ * Footer Styles
+ */
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
