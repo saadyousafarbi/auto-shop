@@ -1,3 +1,11 @@
+# .gitignore for current project
+# There's a lot here, please try to keep it organized.
+
+# Files private to developers #
+###############################
+
+autoshop/private.py
+
 # Compiled source #
 ###################
 *.com
@@ -30,10 +38,28 @@
 ###############
 *.swp
 
-# IDE folder #
-##############
-*.idea
+# Editor and IDE artifacts #
+############################
+*~
+*.swp
+*.orig
+/nbproject
+.idea/
+.redcar/
+codekit-config.json
+.pycharm_helpers/
 
 # Python compiled files #
 #########################
 *.pyc
+
+# NFS artifacts#
+################
+.nfs*
+
+# OS X artifacts #
+##################
+*.DS_Store
+.AppleDouble
+:2e_*
+:2e#
