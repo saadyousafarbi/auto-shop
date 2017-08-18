@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'i%&#7%nq24s#4xp+4b)w@$h)cy&nwotlz&pzb*s#kivh_6f#j6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -142,3 +142,11 @@ STATICFILES_FINDERS = (
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+
+
+#####################################################################
+# Lastly, see if the developer has any local overrides.
+try:
+    from .private import *  # pylint: disable=import-error
+except ImportError:
+    pass
