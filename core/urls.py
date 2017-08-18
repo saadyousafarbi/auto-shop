@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^logout/$', views.log_out, name='log_out'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^profile/edit/$', views.edit_profile, name='edit_profile'),
+    url(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
 ]
