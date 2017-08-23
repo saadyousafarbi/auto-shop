@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
@@ -155,3 +156,14 @@ def edit_profile(request):
         return render(request, 'profile_edit.html', context)
 
     return render(request, 'profile_edit.html', context)
+
+
+def validate_username(request):
+    """
+    This view processes an AJAX request and tells whether a username is taken.
+    """
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    return JsonResponse(data)
