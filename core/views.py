@@ -123,6 +123,7 @@ def edit_profile(request):
     form = EditProfileForm()
     user_profile = request.user.profile
     user_info_dict = {
+        'user_id': request.user.id,
         'username': request.user,
         'bio': user_profile.bio,
         'gender': user_profile.gender,
@@ -153,7 +154,7 @@ def edit_profile(request):
             request.user.username, form.errors
         )
         messages.error(request, 'Form is invalid' + form.errors)
-        return render(request, 'profile_edit.html', context)
+        return render(request, 'profile_edit.html')
 
     return render(request, 'profile_edit.html', context)
 

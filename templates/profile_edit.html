@@ -2,6 +2,7 @@
 
 {% block content %}
 
+
 {% if messages %}
 <div class="span12">
     {% for message in messages %}
@@ -12,7 +13,8 @@
 </div>
 {% endif %}
 
-<form method="POST">
+
+<form method="POST" id="edit_profile">
     {% csrf_token %}
     <table>
         <tr><td><strong>Current Status</strong></td><td><strong>Changes to be made</strong></td></tr>
@@ -30,3 +32,41 @@
     <button type="submit" value="Submit" class="submit"> Save Changes</button>
 </form>
 {% endblock content %}
+
+
+{% block javascript %}
+  <script>
+    $('#edit_profile').submit(function(event) {
+        event.preventDefault();
+        profile_edit_api_url = '/profiles/' + user_id + '/';
+        user_id = {{ user_info_dict.user_id }};
+        data: {
+            'pk': '{{ user_info_dict.user_id }}',
+            'user': '{{ user_info_dict.user_id }}',
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            'bio' = $('#id_bio').val();
+            'gender' = $('#id_gender').val();
+            'date_of_birth' = $('#id_date_of_birth').val();
+            'mobile_number' = $('#id_mobile_number').val();
+            'address' = $('#id_address').val();
+            'city' = $('#id_city').val();
+            'country' = $('#id_country').val();
+        }
+        $.ajax({
+            type: 'PUT',
+            data: data,
+            url: profile_edit_api_url,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            dataType: 'json',
+            success: function (data) {
+                alert('Profile updated.');
+            },
+            error : function (exception) {
+                alert('There was an error updating the profile:  ' + exception);
+            },
+        });
+    });
+  </script>
+{% endblock javascript %}

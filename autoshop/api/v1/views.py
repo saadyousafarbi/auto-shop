@@ -1,12 +1,15 @@
+from django.http import JsonResponse
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import permissions
 
 from autoshop.api.v1.serializers import UserProfileSerializer
 from core.models import Profile
 
 
 class UserProfileViewSet(ModelViewSet):
+    permissions_classes = (permissions.IsAuthenticated,)
     queryset = Profile.objects.all()
     serializer_class = UserProfileSerializer
 
@@ -25,4 +28,4 @@ class UserProfileViewSet(ModelViewSet):
         queryset = Profile.objects.get(pk=kwargs.get('pk'))
         serializer = UserProfileSerializer(queryset, data=request.data, partial=True)
         serializer.save()
-        return Response(serializer.data)
+        return JsonResponse(serializer.data)
