@@ -4,6 +4,7 @@
 # Files private to developers #
 ###############################
 
+media
 autoshop/private.py
 
 # Compiled source #

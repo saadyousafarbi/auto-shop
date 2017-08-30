@@ -54,6 +54,8 @@ class EditProfileForm(ModelForm):
     """
     Edit Profile form.
     """
+    profile_photo = forms.ImageField(help_text='Upload profile photo', required=False)
+
     class Meta:
         model = Profile
         exclude = ['user', 'photo']

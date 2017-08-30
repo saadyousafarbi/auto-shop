@@ -120,7 +120,7 @@ def edit_profile(request):
     """
     Show profile edit page and save user profile information on save.
     """
-    form = EditProfileForm()
+    form = EditProfileForm(request.FILES, request.POST)
     user_profile = request.user.profile
     user_info_dict = {
         'user_id': request.user.id,
@@ -143,6 +143,7 @@ def edit_profile(request):
             Profile.objects.filter(user=request.user).update(
                 bio=form.data['bio'],
                 gender=form.data['gender'],
+                photo=request.FILES['profile_photo'],
                 mobile_number=form.data['mobile_number'],
                 address=form.data['address'],
                 city=form.data['city'],
@@ -153,7 +154,7 @@ def edit_profile(request):
         print 'Profile for user "%s" failed to save due to validation errors: %s' % (
             request.user.username, form.errors
         )
-        messages.error(request, 'Form is invalid' + form.errors)
+        messages.error(request, 'Form is invalid', context)
         return render(request, 'profile_edit.html')
 
     return render(request, 'profile_edit.html', context)
