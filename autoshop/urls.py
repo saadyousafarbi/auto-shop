@@ -29,6 +29,7 @@ router.register('profiles', UserProfileViewSet)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('core.urls')),
+    url(r'^', include('external_auth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += router.urls
