@@ -49,11 +49,13 @@
 </div>
 {% endif %}
 
-    <form method="post">
-        {% csrf_token %}
-            <table>
-                {{form.as_table}}
-            </table>
-        <button type="submit" value="Submit" class="submit"> Register</button>
-    </form>
+<a href="{% url 'external_auth:pakwheels_registration' %}">Register with Pakwheels?</a>
+
+<form method="post">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button type="submit" value="Submit" class="submit"> Register</button>
+</form>
 {% endblock content %}

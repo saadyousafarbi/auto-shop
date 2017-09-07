@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'core.apps.LogistrationConfig',
     'analytics.apps.AnalyticsConfig',
+    'external_auth.apps.ExternalAuthConfig',
 ]
 
 

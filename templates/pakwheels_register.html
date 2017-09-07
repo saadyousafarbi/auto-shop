@@ -12,14 +12,13 @@
 </div>
 {% endif %}
 
-{% if user.is_authenticated %}
-    <a href="{% url 'core:profile' %}">profile</a>
-    <a href="{% url 'core:log_out' %}">logout</a>
 
-{% else %}
-    <a href="{% url 'core:login' %}">login</a>
-    <a href="{% url 'core:register' %}">register</a>
-
-{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <button type="submit" value="Submit" class="submit"> Register with Pakwheels </button>
+</form>
 
 {% endblock content %}
