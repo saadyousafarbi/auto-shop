@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib import messages
 from external_auth.forms import PakwheelsLoginForm
@@ -48,7 +49,9 @@ def pakwheels_registration(request):
             user.profile.date_of_birth = pakwheels_profile.birthday
             user.profile.city = pakwheels_profile.city
             user.profile.country = pakwheels_profile.country
+            user.is_active = True
             user.save()
+            login(request, user)
             messages.success(
                 request,
                 'Pakwheels login successful.'
@@ -56,6 +59,7 @@ def pakwheels_registration(request):
                 ' You can change your password.',
             )
             return render(request, 'home.html')
+
     else:
         messages.error(request, 'The Pakwheels credentials are incorrect. Please try again.')
         return render(request, 'pakwheels_register.html', context={'form': pakwheels_login_form})
