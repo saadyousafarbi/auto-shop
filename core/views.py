@@ -48,7 +48,13 @@ def register(request):
                 new_user.profile.address = form.data['address']
                 new_user.profile.city = form.data['city']
                 new_user.profile.country = form.data['country']
+                new_user.is_active = True
                 new_user.save()
+                login(request, new_user)
+                messages.success(
+                    request,
+                    'Registration was successful. Welcome to Auto-shop.',
+                )
                 return redirect('/')
 
         print 'Profile for user "%s" failed to save due to validation errors: %s' % (
