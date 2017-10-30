@@ -4,6 +4,7 @@
 
 Username: {{ user_info_dict.username }} <br>
 Bio: {{ user_info_dict.bio }} <br>
+Photo: <img src='/media/{{ user_info_dict.photo }}' width='150' height='200'/> <br>
 Gender:  {{ user_info_dict.gender }} <br>
 Mobile number: {{ user_info_dict.mobile_number }} <br>
 Date of birth: {{ user_info_dict.date_of_birth }} <br>
@@ -11,6 +12,7 @@ Address: {{ user_info_dict.address }} <br>
 City: {{ user_info_dict.city }} <br>
 Country: {{ user_info_dict.country }} <br>
 
+<a href="{% url 'core:log_out' %}">logout</a>
 <a href="{% url 'core:edit_profile' %}">Edit profile</a>
 
 {% endblock content %}

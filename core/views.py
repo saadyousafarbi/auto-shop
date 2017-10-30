@@ -88,7 +88,8 @@ def log_in(request):
 
             login(request, user)
             messages.success(request, 'You logged in successfully.')
-            return render(request, 'home.html')
+            print('hello')
+            return redirect('/')
     else:
         return render(request, 'login.html', {'form': form})
 
@@ -111,6 +112,7 @@ def profile(request):
         'username': user_profile.user,
         'bio': user_profile.bio,
         'gender': user_profile.gender,
+        'photo': user_profile.photo,
         'date_of_birth': user_profile.date_of_birth,
         'mobile_number': user_profile.mobile_number,
         'address': user_profile.address,
@@ -126,21 +128,7 @@ def edit_profile(request):
     """
     Show profile edit page and save user profile information on save.
     """
-    form = EditProfileForm(request.FILES, request.POST)
     user_profile = request.user.profile
-    user_info_dict = {
-        'user_id': request.user.id,
-        'username': request.user,
-        'bio': user_profile.bio,
-        'gender': user_profile.gender,
-        'date_of_birth': user_profile.date_of_birth,
-        'mobile_number': user_profile.mobile_number,
-        'address': user_profile.address,
-        'city': user_profile.city,
-        'country': user_profile.country,
-        'photo': user_profile.photo,
-    }
-    context = {'user_info_dict': user_info_dict, 'form': form}
     if request.method == 'POST':
         post_data = request.POST.copy()
         post_data['date_of_birth'] = parse(post_data['date_of_birth'])
@@ -155,14 +143,27 @@ def edit_profile(request):
                 city=form.data['city'],
                 country=form.data['country'],
             )
+            messages.success(request, 'Successfully updated profile')
             return redirect(reverse('core:profile'))
 
         print 'Profile for user "%s" failed to save due to validation errors: %s' % (
             request.user.username, form.errors
         )
-        messages.error(request, 'Form is invalid', context)
+        messages.error(request, 'Form is invalid')
         return render(request, 'profile_edit.html')
 
+    form = EditProfileForm(initial={
+        'username': request.user,
+        'bio': user_profile.bio,
+        'gender': user_profile.gender,
+        'date_of_birth': user_profile.date_of_birth,
+        'mobile_number': user_profile.mobile_number,
+        'address': user_profile.address,
+        'city': user_profile.city,
+        'country': user_profile.country,
+        'photo': user_profile.photo,
+    })
+    context = {'user_id': request.user.id, 'form': form}
     return render(request, 'profile_edit.html', context)
 
 

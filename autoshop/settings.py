@@ -41,12 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'corsheaders',
 
     'core.apps.LogistrationConfig',
     'analytics.apps.AnalyticsConfig',
     'external_auth.apps.ExternalAuthConfig',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,9 +57,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    'corsheaders.middleware.CorsMiddleware',
+
     'analytics.middleware.AnalyticsMiddleware',
 ]
 
+CORS_ORIGIN_WHITELIST = (
+    '127.0.0.1:3000',
+    'localhost:3000',
+)
 ROOT_URLCONF = 'autoshop.urls'
 
 TEMPLATES = [
