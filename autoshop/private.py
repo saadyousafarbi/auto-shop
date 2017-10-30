@@ -7,7 +7,7 @@ from autoshop.settings import BASE_DIR
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+#
 # Development SQLITE3 database
 # DATABASES = {
 #     'default': {

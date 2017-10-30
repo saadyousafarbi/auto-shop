@@ -13,23 +13,81 @@
 </div>
 {% endif %}
 
+<script>
 
-<form method="POST" id="edit_profile" enctype="multipart/form-data">
+</script>
+
+<h3 align="center">EDIT YOUR PROFILE</h3>
+
+<a href="{% url 'core:log_out' %}">logout</a>
+
+<form method="POST" id="edit_profile" enctype="multipart/form-data" class="form-horizontal">
     {% csrf_token %}
-    <table>
-        <tr><td><strong>Current Status</strong></td><td><strong>Changes to be made</strong></td></tr>
-        <tr><td>Username: {{ user_info_dict.username }}</td><br></tr>
-        <tr><td>Profile picture: {{ user_info_dict.photo }}</td> <td> {{ form.profile_photo }}</td><br></tr>
-        <tr><td>Bio: {{ user_info_dict.bio }}</td> <td>{{ form.bio }}</td><br></tr>
-        <tr><td>Gender:  {{ user_info_dict.gender }}</td> <td>{{ form.gender }}</td><br></tr>
-        <tr><td>Date of birth: {{ user_info_dict.date_of_birth }}</td><td> {{ form.date_of_birth }}</td><br></tr>
-        <tr><td>Mobile number:  {{ user_info_dict.mobile_number }}</td> <td>{{ form.mobile_number }}</td><br></tr>
-        <tr><td>Address: {{ user_info_dict.address }}</td> <td> {{ form.address }}</td><br></tr>
-        <tr><td>City: {{ user_info_dict.city }}</td><td> {{ form.city }}</td><br></tr>
-        <tr><td>Country: {{ user_info_dict.country }}</td><td> {{ form.country }}<br></tr>
-    </table>
-
-    <button type="submit" value="Submit" class="submit"> Save Changes</button>
+    <div class="form-group">
+        <label>
+            <strong>Profile picture</strong>
+        </label>
+        <div class="form-control">
+            {{ form.profile_photo }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>
+            <strong>Bio: </strong>
+        </label>
+        <div>
+            {{ form.bio }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>
+            <strong>Gender: </strong>
+        </label>
+        <div class="form-control">
+            {{ form.gender }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>
+            <strong>Date of birth:</strong>
+        </label>
+        <div class="form-control">
+            {{ form.date_of_birth }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>
+            <strong>Mobile number:</strong>
+        </label>
+        <div class="form-control">
+           {{ form.mobile_number }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>
+            <strong>Address:</strong>
+        </label>
+        <div class="form-control">
+            {{ form.address }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>
+            <strong>City:</strong>
+        </label>
+        <div class="form-control">
+            {{ form.city }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>
+            <strong>Country:</strong>
+        </label>
+        <div class="form-control">
+            {{ form.country }}
+        </div>
+    </div>
+    <button type="submit" value="Submit" class="btn btn-primary float-right"> Save Changes</button>
 </form>
 {% endblock content %}
 
@@ -38,11 +96,11 @@
   <script>
     $('#edit_profile').submit(function(event) {
         event.preventDefault();
-        user_id = {{ user_info_dict.user_id }};
+        user_id = {{ user_id }};
         profile_edit_api_url = '/profiles/' + user_id + '/';
         var form_data = new FormData();
-        form_data.append('pk', '{{ user_info_dict.user_id }}');
-        form_data.append('user', '{{ user_info_dict.user_id }}');
+        form_data.append('pk', '{{ user_id }}');
+        form_data.append('user', '{{ user_id }}');
         form_data.append('csrfmiddlewaretoken', '{{ csrf_token }}');
         form_data.append('bio', $('#id_bio').val());
         form_data.append('gender', $('#id_gender').val());
@@ -64,7 +122,6 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                alert('Profile updated.');
             },
             error : function (exception) {
                 alert('There was an error updating the profile:  ' + exception);

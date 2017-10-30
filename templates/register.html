@@ -6,7 +6,6 @@
   <script>
     $("#id_username").change(function () {
       var username = $(this).val();
-
       $.ajax({
         url: '/ajax/validate_username/',
         data: {
@@ -19,8 +18,8 @@
           }
         }
       });
-    });
 
+    });
 
     $("#id_email").change(function() {
         var email = $(this).val();
@@ -28,13 +27,15 @@
         if (!email_pattern.test(email)) {
             alert("Invalid email address.");
         }
-      });
+
+    });
 
     $("#id_password").change(function() {
         var password = $(this).val();
         if (password.length < 8) {
             alert("Password length is too short. Password length should be at least 8 characters.");
         }
+
     });
   </script>
 {% endblock %}
